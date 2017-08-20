@@ -1,0 +1,11 @@
+[Unit]
+Description=Unit to run python script for check mount/unmount usb hdd
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/python3 /home/pi/Autoremount/detect.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
