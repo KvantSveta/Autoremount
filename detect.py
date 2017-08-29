@@ -23,7 +23,7 @@ def check_is_mount(log):
         sleep(1)
         return False
     else:
-        log.info("Device mount")
+        #log.info("Device mount")
         sleep(10)
         return True
 
