@@ -4,7 +4,7 @@ from subprocess import check_output, call
 from threading import Event
 
 from logger import Logger
-
+from send_mail import send_mail
 
 __author__ = "Evgeny Goncharov"
 
@@ -20,10 +20,11 @@ def check_is_mount(log):
     # ]
     if len(answer) == 3:
         log.error("Device unmount")
+        send_mail("Device unmount")
         sleep(1)
         return False
     else:
-        #log.info("Device mount")
+        # log.info("Device mount")
         sleep(10)
         return True
 
@@ -34,7 +35,9 @@ def decorator(func):
             func(param)
             sleep(1)
         except Exception as e:
-            log.error("Error: {}".format(e))
+            message = "!!!CRITICAL ERROR!!!: {}".format(e)
+            log.critical(message)
+            send_mail(message)
             run_service.clear()
     return wrapper
 
@@ -94,6 +97,8 @@ while run_service.is_set():
         continue
 
     log.critical("Nothing works!!!")
+    send_mail("Autoremount not work!!!")
+
     run_service.clear()
 
 log.info("Program stop\n")
