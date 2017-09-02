@@ -10,7 +10,17 @@ __author__ = "Evgeny Goncharov"
 
 
 def check_is_mount(log):
-    answer = check_output(["ls", "-al", "/media"])
+    try:
+        answer = check_output(["ls", "-al", "/media"])
+    except Exception as e:
+        # ls: reading directory /media: Input/output error
+        # Command '['ls', '-al', '/media']' returned non-zero exit status 2
+        message = "!!!CRITICAL ERROR!!! Device unmount: {}".format(e)
+        log.critical(message)
+        send_mail(message)
+        sleep(60)
+        return False
+
     answer = answer.decode()
     answer = answer.splitlines()
     # [
