@@ -93,6 +93,7 @@ while run_service.is_set():
     call_mount(log, run_service)
 
     if check_is_mount(log) or not run_service.is_set():
+        send_mail("Simple mount execute!")
         continue
 
     log.info("Check middle mount")
@@ -100,6 +101,7 @@ while run_service.is_set():
     call_mount(log, run_service)
 
     if check_is_mount(log) or not run_service.is_set():
+        send_mail("Middle mount execute!")
         continue
 
     log.info("Check hard mount")
@@ -107,6 +109,7 @@ while run_service.is_set():
     call_mount(log, run_service)
 
     if check_is_mount(log) or not run_service.is_set():
+        send_mail("Hard mount execute!")
         continue
 
     log.critical("Nothing works!!!")
