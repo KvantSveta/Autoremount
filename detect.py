@@ -68,6 +68,9 @@ def call_umount(param=""):
     call(["umount", device, param])
 
 
+# start sleep
+sleep(10)
+
 log = Logger("/home/pi/Autoremount/detect.log")
 log.info("Program start")
 
